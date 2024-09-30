@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculadora de Precificação para Restaurantes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .calculator {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .calculator h2 {
+            text-align: center;
+        }
+
+        .calculator label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        .calculator input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+
+        .calculator button {
+            margin-top: 15px;
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .calculator button:hover {
+            background-color: #218838;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: center;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="calculator">
+    <h2>Calculadora de Precificação</h2>
+    <label for="receita">Receita Desejada (R$):</label>
+    <input type="number" id="receita" placeholder="Ex: 47,00">
+
+    <label for="taxaIfood">Taxa do iFood (%):</label>
+    <input type="number" id="taxaIfood" placeholder="Ex: 18" step="0.01">
+
+    <label for="taxaEntrega">Taxa de Entrega (R$):</label>
+    <input type="number" id="taxaEntrega" placeholder="Ex: 5,00">
+
+    <label for="cupom">Cupom de Desconto (R$):</label>
+    <input type="number" id="cupom" placeholder="Ex: 5,00">
+
+    <button onclick="calcularPrecoFinal()">Calcular Preço Final</button>
+
+    <div class="result" id="resultado"></div>
+</div>
+
+<script>
+    function calcularPrecoFinal() {
+        // Obter os valores dos campos
+        var receita = parseFloat(document.getElementById('receita').value);
+        var taxaIfood = parseFloat(document.getElementById('taxaIfood').value) / 100;
+        var taxaEntrega = parseFloat(document.getElementById('taxaEntrega').value);
+        var cupom = parseFloat(document.getElementById('cupom').value);
+
+        // Validar entradas
+        if (isNaN(receita) || isNaN(taxaIfood) || isNaN(taxaEntrega) || isNaN(cupom)) {
+            alert("Por favor, preencha todos os campos corretamente.");
+            return;
+        }
+
+        // Calcular Custos Extras
+        var custosExtras = taxaEntrega + cupom;
+
+        // Calcular Preço Final
+        var precoFinal = (receita + custosExtras) / (1 - taxaIfood);
+
+        // Arredondar para duas casas decimais
+        precoFinal = precoFinal.toFixed(2);
+
+        // Exibir resultado
+        document.getElementById('resultado').innerHTML = "Preço Final ao Cliente: R$ " + precoFinal;
+    }
+</script>
+
+</body>
+</html>
